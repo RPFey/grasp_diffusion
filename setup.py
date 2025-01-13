@@ -21,5 +21,5 @@ setup(name='se3dif',
       author='Julen Urain',
       author_email='julen@robot-learning.de',
       packages=['se3dif', 'isaac_evaluation'],
-      install_requires=requires_list,
+      # install_requires=requires_list,
       )
