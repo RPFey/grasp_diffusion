@@ -1,9 +1,9 @@
-name: se3dif_env
+name: se3diff
 channels:
   - pytorch
   - conda-forge
 dependencies:
-  - python=3.10
+  - python=3.11
   - numpy
   - pytorch
   - torchvision

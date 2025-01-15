@@ -17,7 +17,7 @@ class ProjectedSE3DenoisingLoss():
     def marginal_prob_std(self, t, sigma=0.5):
         return torch.sqrt((sigma ** (2 * t) - 1.) / (2. * np.log(sigma)))
 
-    def loss_fn(self, model, model_input, ground_truth, val=False, eps=1e-5):
+    def __call__(self, model, model_input, ground_truth, val=False, eps=1e-5):
 
         ## Set input ##
         H = model_input['x_ene_pos']
@@ -75,7 +75,7 @@ class SE3DenoisingLoss():
         tlog = torch.cat((dt, log), -1)
         return -0.5 * tlog.pow(2).sum(-1)/(context[2]**2)
 
-    def loss_fn(self, model, model_input, ground_truth, val=False, eps=1e-5):
+    def __call__(self, model, model_input, ground_truth, val=False, eps=1e-5):
 
         ## From Homogeneous transformation to axis-angle ##
         H = model_input['x_ene_pos']
