@@ -171,21 +171,28 @@ class Grasp_AnnealedLD():
         Ht = H0
         if save_path:
             trj_H = Ht[None,...]
+        
         for t in range(self.T):
             Ht = self._step(Ht, t, noise_off=self.deterministic)
             if save_path:
                 trj_H = torch.cat((trj_H, Ht[None,:]), 0)
+        
         for t in range(self.T_fit):
             Ht = self._step(Ht, self.T, noise_off=True)
             if save_path:
                 trj_H = torch.cat((trj_H, Ht[None,:]), 0)
 
+        # compute final score 
+        with torch.no_grad():
+            eps = 1e-3
+            phase = (1 / (self.T)) + eps
+            t_in = phase*torch.ones_like(Ht[:, 0, 0])
+            energy = self.model(Ht, t_in)
+            
         if save_path:
-            return Ht, trj_H
+            return Ht, energy, trj_H
         else:
-            return Ht
-
-
+            return Ht, energy
 
 if __name__ == '__main__':
     import torch.nn as nn
