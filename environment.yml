@@ -1,10 +1,12 @@
-name: se3dif_env
+name: test
 channels:
   - pytorch
   - conda-forge
 dependencies:
-  - python=3.10
-  - numpy
+  - python=3.11
+  - suitesparse
   - pytorch
   - torchvision
   - torchaudio
+  - pytorch-cuda=12.1
+  - nvidia/label/cuda-12.1.0::cuda-toolkit
