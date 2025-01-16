@@ -1,4 +1,4 @@
-name: se3diff
+name: test
 channels:
   - pytorch
   - conda-forge
