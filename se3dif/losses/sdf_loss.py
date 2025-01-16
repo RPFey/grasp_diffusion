@@ -8,7 +8,7 @@ class SDFLoss():
 
         self.grad = grad
 
-    def loss_fn(self, model, model_input, ground_truth, val=False):
+    def __call__(self, model, model_input, ground_truth, val=False):
         loss_dict = dict()
         label = ground_truth[self.field].squeeze().reshape(-1)
 

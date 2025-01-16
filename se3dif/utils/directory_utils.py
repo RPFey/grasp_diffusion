@@ -6,7 +6,7 @@ base_dir = os.path.abspath(os.path.dirname(__file__)+'../../../')
 ## Set root directory
 root_directory = os.path.abspath(os.path.join(base_dir, '..'))
 ## Set data directory
-data_directory = "/home/user/Documents/grasp_diffusion" # os.path.abspath(os.path.join(root_directory, 'data'))
+data_directory = os.path.abspath(os.path.join(base_dir, 'data'))
 # Set directory for meshes regarding the simulation environment:
 mesh_dir = os.path.join(base_dir, 'isaac_evaluation', 'grasp_sim', 'meshes')
 

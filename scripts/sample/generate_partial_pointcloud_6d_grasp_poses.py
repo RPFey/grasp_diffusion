@@ -55,7 +55,6 @@ def sample_pointcloud(obj_id=0, obj_class='Mug'):
     scan_pointcloud = ScanPointcloud()
     P = scan_pointcloud.get_hq_scan_view(mesh)
 
-
     P *= 8.
     P_mean = np.mean(P, 0)
     P += -P_mean
