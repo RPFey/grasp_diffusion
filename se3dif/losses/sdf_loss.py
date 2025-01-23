@@ -1,23 +1,22 @@
 import torch
 import torch.nn as nn
+import se3dif.models as models
 
 class SDFLoss():
     def __init__(self, field='sdf', delta = 0.6, grad=True):
         self.field = field
         self.delta = delta
-
         self.grad = grad
 
-    def __call__(self, model, model_input, ground_truth, val=False):
+    def __call__(self, model:models.GraspDiffusionFields, 
+                        model_input, ground_truth, val=False):
         loss_dict = dict()
         label = ground_truth[self.field].squeeze().reshape(-1)
 
         ## Set input ##
         x_sdf = model_input['x_sdf'].detach().requires_grad_()
-        c = model_input['visual_context']
-
+        
         ## Compute model output ##
-        model.set_latent(c, batch=x_sdf.shape[1])
         sdf = model.compute_sdf(x_sdf.view(-1, 3))
 
         ## Reconstruction Loss ##

@@ -10,7 +10,7 @@ from se3dif.utils import get_pretrained_models_src, load_experiment_specificatio
 pretrained_models_dir = get_pretrained_models_src()
 
 
-def load_model(args):
+def load_model(args)->models.GraspDiffusionFields:
     if 'pretrained_model' in args:
         model_args = load_experiment_specifications(os.path.join(pretrained_models_dir,
                                                                       args['pretrained_model']))
@@ -44,7 +44,7 @@ def load_model(args):
     return model
 
 
-def load_grasp_diffusion(args):
+def load_grasp_diffusion(args) -> models.GraspDiffusionFields:
     device = args['device']
     params = args['NetworkSpecs']
     feat_enc_params = params['feature_encoder']
@@ -91,7 +91,7 @@ def load_grasp_diffusion(args):
     return model
 
 
-def load_pointcloud_grasp_diffusion(args):
+def load_pointcloud_grasp_diffusion(args) -> models.GraspDiffusionFields:
     device = args['device']
     params = args['NetworkSpecs']
     feat_enc_params = params['feature_encoder']

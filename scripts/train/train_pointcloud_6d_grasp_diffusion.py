@@ -7,7 +7,7 @@ import torch
 from torch.utils.data import DataLoader
 
 from se3dif import datasets, losses, summaries, trainer
-from se3dif.models import loader
+from se3dif.models import loader, GraspDiffusionFields
 
 from se3dif.utils import load_experiment_specifications
 
@@ -73,7 +73,7 @@ def main(opt):
 
     ## Model
     args['device'] = device
-    model = loader.load_model(args)
+    model:GraspDiffusionFields = loader.load_model(args)
 
     # Losses
     loss = losses.get_losses(args)

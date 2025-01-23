@@ -21,8 +21,8 @@ class ProjectedSE3DenoisingLoss():
 
         ## Set input ##
         H = model_input['x_ene_pos']
-        c = model_input['visual_context']
-        model.set_latent(c, batch=H.shape[1])
+        # context = model_input['visual_context']
+        # model.set_latent(context, batch=H.shape[1])
         H = H.reshape(-1, 4, 4)
 
         ## 1. H to vector ##
@@ -79,9 +79,9 @@ class SE3DenoisingLoss():
 
         ## From Homogeneous transformation to axis-angle ##
         H = model_input['x_ene_pos']
-        n_grasps = H.shape[1]
-        c = model_input['visual_context']
-        model.set_latent(c, batch=n_grasps)
+        # n_grasps = H.shape[1]
+        # c = model_input['visual_context']
+        # model.set_latent(c, batch=n_grasps)
 
         H_in = H.reshape(-1, 4, 4)
         H_in = SO3_R3(R=H_in[:, :3, :3], t=H_in[:, :3, -1])
@@ -122,4 +122,6 @@ class SE3DenoisingLoss():
         info = {self.field: energy}
         loss_dict = {"Score loss": loss}
         return loss_dict, info
+    
+    # def compute_loss(self, )
 

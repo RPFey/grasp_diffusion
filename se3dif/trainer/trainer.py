@@ -49,7 +49,6 @@ def train(model, train_dataloader, epochs, lr, steps_til_summary, epochs_til_che
                 gt = dict_to_device(gt, device)
 
                 start_time = time.time()
-
                 losses, iter_info = loss_fn(model, model_input, gt)
 
                 train_loss = 0.

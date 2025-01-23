@@ -77,13 +77,15 @@ class GraspDiffusionFields(nn.Module):
 
     def set_latent(self, O, batch = 1):
         self.z = self.vision_encoder(O.squeeze(1))
-        self.z = self.z.unsqueeze(1).repeat(1, batch, 1).reshape(-1, self.z.shape[-1])
-
+        
     def forward(self, H, k):
         ## 1. Represent H with points
+        repeat_times = H.shape[0] // self.z.shape[0]
+        z_ext = self.z.unsqueeze(1).repeat(1, repeat_times, 1).reshape(-1, self.z.shape[-1])
+        
         p = self.geometry_encoder(H, self.points)
         k_ext = k.unsqueeze(1).repeat(1, p.shape[1])
-        z_ext = self.z.unsqueeze(1).repeat(1, p.shape[1], 1)
+        z_ext = z_ext.unsqueeze(1).repeat(1, p.shape[1], 1)
         ## 2. Get Features
         psi = self.feature_encoder(p, k_ext, z_ext)
         ## 3. Flat and get energy
@@ -92,6 +94,17 @@ class GraspDiffusionFields(nn.Module):
         return e
 
     def compute_sdf(self, x):
+        """ Compute SDF from the feature encoder 
+        
+        Args:   
+            x (torch.Tensor): input points (N, 3)
+        Returns:
+            torch.Tensor: SDF values (N, )
+        """
         k = torch.rand_like(x[..., 0])
-        psi = self.feature_encoder(x, k, self.z)
+        
+        latent_vecs = self.z
+        repeat_times = x.shape[0] // latent_vecs.shape[0]
+        latent_vecs = latent_vecs.unsqueeze(1).repeat(1, repeat_times, 1).reshape(-1, latent_vecs.shape[-1])
+        psi = self.feature_encoder(x, k, latent_vecs)
         return psi[..., 0]

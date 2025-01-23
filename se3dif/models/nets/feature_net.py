@@ -113,7 +113,12 @@ class TimeLatentFeatureEncoder(nn.Module):
 
     # input: N x (L+3)
     def forward(self, input, timesteps, latent_vecs=None):
-
+        """
+        Args:
+            input (torch.Tensor): input tensor of shape (N, L+3)
+            timesteps (torch.Tensor): input tensor of shape (N, L)
+            latent_vecs (torch.Tensor): input tensor of shape (N, latent_size)
+        """
         ## Encode TimeStep
         t_emb = self.time_embed(timesteps)
         ## Encode Position

@@ -24,9 +24,13 @@ class LossDictionary():
         self.loss_dict = loss_dict
 
     def loss_fn(self, model, model_input, ground_truth, val=False):
-
         losses = {}
         infos = {}
+        
+        # set the visual context for the model
+        c = model_input['visual_context']
+        model.set_latent(c)
+        
         for field in self.fields:
             loss_fn_k = self.loss_dict[field]
             loss, info = loss_fn_k(model, model_input, ground_truth, val)
