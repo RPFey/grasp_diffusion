@@ -208,7 +208,7 @@ if __name__ == '__main__':
 
     ## 1. Approximated Grasp_AnnealedLD
     generator = ApproximatedGrasp_AnnealedLD(model(), T=100, T_fit=500)
-    H = generator.sample()
+    H, score = generator.sample()
     print(H)
 
     ## 2. Grasp_AnnealedLD
